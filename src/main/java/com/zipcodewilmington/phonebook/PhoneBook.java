@@ -1,5 +1,6 @@
 package com.zipcodewilmington.phonebook;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -61,4 +62,27 @@ public class PhoneBook {
         }
         return numberString;
     }
+
+    public void addPhoneNumber(String name, String number) {
+        String[] array = lookupEntry(name);
+        int newCount = array.length + 1;
+        String[] newArray = Arrays.copyOf(array, newCount);
+        newArray[newCount-1] = number;
+        phoneBook.replace(name, newArray);
+        }
+
+    public void removePhoneNumber(String name, String number) {
+        String[] array = lookupEntry(name);
+        for (int i = 0; i < array.length ; i++) {
+            if(number.equals(array[i])) {
+                array[i] = null;
+            }
+        }
+        int newCount = array.length - 1;
+        String[] newArray = Arrays.copyOf(array, newCount);
+        phoneBook.replace(name, newArray);
+    }
+
 }
+
+

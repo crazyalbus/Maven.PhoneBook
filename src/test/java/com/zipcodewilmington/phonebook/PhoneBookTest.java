@@ -14,7 +14,8 @@ public class PhoneBookTest {
     String testName1 = "Zebra";
     String[] testPhone1 = {"111-222-333"};
     String testName2 = "Dog";
-    String[] testPhone2 = {"222-444-4444", "555-666-777"};
+    String[] testPhone2 = {"444-555-6666", "777-888-9999"};
+    String testPhone3 = "123-456-7890";
 
 
     @Test
@@ -105,13 +106,41 @@ public class PhoneBookTest {
         testPhoneBook.put(testName1, testPhone1);
         testPhoneBook.put(testName2, testPhone2);
         String expectedDisplay = "Dog numbers:\n" +
-                "   222-444-4444\n" +
-                "   555-666-777\n" +
+                "   444-555-6666\n" +
+                "   777-888-9999\n" +
                 "Zebra numbers:\n" +
                 "   111-222-333\n";
         String actualDisplay = newPhoneBook.displayPhoneBook();
 
         //Then
         Assert.assertEquals(expectedDisplay, actualDisplay);
+    }
+
+    @Test
+    public void addPhoneNumberTest() {
+        //Given
+        PhoneBook newPhoneBook = new PhoneBook();
+        newPhoneBook.addEntry(testName1, testPhone1);
+        Assert.assertEquals(1, newPhoneBook.lookupEntry(testName1).length);
+
+        //When
+        newPhoneBook.addPhoneNumber(testName1, testPhone3);
+
+        //Then
+        Assert.assertEquals(2, newPhoneBook.lookupEntry(testName1).length);
+    }
+
+    @Test
+    public void removePhoneNumberTest() {
+        //Given
+        PhoneBook newPhoneBook = new PhoneBook();
+        newPhoneBook.addEntry(testName1, testPhone2);
+        Assert.assertEquals(2, newPhoneBook.lookupEntry(testName1).length);
+
+        //When
+        newPhoneBook.removePhoneNumber(testName1, "555-666-7777");
+
+        //Then
+        Assert.assertEquals(1, newPhoneBook.lookupEntry(testName1).length);
     }
 }
